@@ -1,0 +1,87 @@
+{% extends 'bootstrap/base.html' %}
+{% block content %}
+
+
+    <div class ='container'>
+        <div class='jumbotron text-center'>
+            <h2>Natural Language Processing Application</h2>
+            <h3>Tokenization - Key Words - Sentiment Analysis</h3>
+            <p>Understanding Everday Language</p>
+        </div>
+    </div>
+
+    <div class="container">
+            <form action="{{url_for('analyse')}}" method="POST" id="myForm">
+                <label>Enter Your Text Below:</label>
+                    <textarea name="rawtext" rows="3" cols="2" class="form-control">
+                
+                
+                    </textarea>
+                    <input type="submit" value="Submit" class="btn btn-primary"> 
+                    <input type="reset" value="Clear" class="btn btn-outline-primary">
+
+                    <a href="{{url_for('index')}}" type = "button" class="btn btn-danger">Reset</a>
+                
+                
+                </form>
+
+
+    </div>
+    <br/>
+    <hr/>
+    
+    <div class="main">
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                Key Words Present in Input Text
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">
+                    <div class="alert alert-primary" role="alert">
+                        The Input text has {{num_tokens}} number of tokens
+                        with {{summary}} important words in it.
+                    </div>
+                </h5>
+            </div>
+            <div class="card-text">
+                <h5>The Entered Text is :</h5>
+                <p style="color:#FF8C00;font-family:sans-serif;">{{ received_text }}</p>
+                <hr/>
+                <br/>
+                <p>Time taken for Processing : <span style="color:#6B8E23;">{{final_time}}</span> seconds.</p>
+                <hr/>
+                <br/>
+                <p>The above text is about:</p>
+                {% for i in summary%}
+                <ul class="list-group">
+                    <li>{{i}}
+                        <a href="https://www.dictionary.com/browse/{{i}}?s=t" target="blank_" type="button" class="btn btn-primary">View {{i}} Meaning Here</a>
+                    </li>
+                </ul>
+                {% endfor %}
+            </div>
+            
+            <table class="table table-striped table-dark">
+                <thead>
+                    <tr>
+                        <th scope="col">Sentiment Analysis</th>
+                        <th scope="col">Polarity</th>
+                        <th scope="col">Subjectivity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">Score:</th>
+                        <td>{{blob_sentiment}}</td>
+                        <td>{{blob_subjectivity}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+        </div>
+    </div>
+    </div>
+
+
+{% endblock %}
